@@ -1,0 +1,67 @@
+import styled from "@emotion/styled";
+import gsap from "gsap";
+import React, { useLayoutEffect } from "react";
+import InterestCard, { ICard } from "./Card";
+
+type Props = {};
+
+const CardList = (props: Props) => {
+  useLayoutEffect(() => {
+    gsap.fromTo(
+      ".interest-card",
+      {
+        opacity: 0,
+        y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: {
+          each: 0.25,
+          from: 0,
+        },
+      }
+    );
+  }, []);
+
+  return (
+    <CardListContainer>
+      {INTEREST_LIST.map((card) => (
+        <InterestCard {...card} key={card.title} />
+      ))}
+    </CardListContainer>
+  );
+};
+
+const CardListContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 0 auto;
+`;
+
+const INTEREST_LIST: ICard[] = [
+  {
+    title: "인터렉션",
+    description: "인터렉션을 통해 사용자와 소통합니다.",
+    backgroundColor: "#f54290",
+    imageUrl: "",
+  },
+  {
+    title: "Serverless",
+    description: "서버리스는 무한한 가능성을 가지고 있습니다.",
+    backgroundColor: "#f5a742",
+  },
+  {
+    title: "프론트엔드",
+    description: "프론트엔드는 사용자 경험을 만듭니다.",
+    backgroundColor: "#2bcf93",
+  },
+  {
+    title: "Cloud",
+    description: "클라우드는 무한한 가능성을 가지고 있습니다.",
+    backgroundColor: "#3281db",
+  },
+];
+
+export default CardList;
