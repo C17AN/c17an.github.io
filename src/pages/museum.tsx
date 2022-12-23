@@ -21,7 +21,7 @@ export default function Home(): JSX.Element {
       description="Description will go into a meta tag in <head />"
     >
       <HomepageHeader />
-      <main>Museum</main>
+      <main>간단한 토이 프로젝트들을 진열해요.</main>
     </Layout>
   );
 }

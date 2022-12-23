@@ -37,30 +37,33 @@ const CardListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin: 0 auto;
+  margin: 0 auto 40px auto;
 `;
 
 const INTEREST_LIST: ICard[] = [
   {
-    title: "인터렉션",
+    title: "UI/UX",
     description: "인터렉션을 통해 사용자와 소통합니다.",
     backgroundColor: "#f54290",
-    imageUrl: "",
+    imageUrl: "img/RootPage/interaction.png",
   },
   {
-    title: "Serverless",
-    description: "서버리스는 무한한 가능성을 가지고 있습니다.",
+    title: "클라우드",
+    description: "클라우드가 가진 무한한 가능성을 믿고 있습니다.",
     backgroundColor: "#f5a742",
+    imageUrl: "img/RootPage/lambda.png",
   },
   {
     title: "프론트엔드",
     description: "프론트엔드는 사용자 경험을 만듭니다.",
     backgroundColor: "#2bcf93",
+    imageUrl: "",
   },
   {
-    title: "Cloud",
-    description: "클라우드는 무한한 가능성을 가지고 있습니다.",
+    title: "컨테이너",
+    description: "컨테이너 가상화가 보여주는 기술들에도 관심이 많습니다.",
     backgroundColor: "#3281db",
+    imageUrl: "img/RootPage/container.png",
   },
 ];
 
