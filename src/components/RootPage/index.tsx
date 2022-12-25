@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useWakaTime } from "@site/src/remotes/wakatime/useWakaTime";
 import gsap from "gsap";
@@ -40,14 +41,14 @@ const RootPage = (props: Props) => {
           <Chip text="Github" backgroundColor="#000" color="#fff" />
         </ChipContainer>
         <IntroductionContainer>
-          <div>
+          <IntroductionText>
             복잡한 정보를 예쁘고 간단하게 전달할 수 있는 UI의 매력에 이끌려
             프론트엔드 개발을 시작하게 되었습니다.
-          </div>
-          <div>
+          </IntroductionText>
+          <IntroductionText>
             새로운 기술을 배우는 것을 두려워하지 않으며, 기술로 더 편리한 세상을
             만드는 데에 기여하고 싶습니다.
-          </div>
+          </IntroductionText>
         </IntroductionContainer>
         <SubTitle typography="h3" ref={text2Ref}>
           이런 기술들에 관심이 많습니다.
@@ -58,7 +59,7 @@ const RootPage = (props: Props) => {
         </SubTitle>
         <ExperienceList />
         <Text typography="h3" ref={text2Ref}>
-          그리고, 이런 개발자가 되고자 합니다.
+          그리고 이런 개발자가 되고자 합니다.
         </Text>
       </Body>
       {/* <ParallaxImage1 src="/img/Rootpage/cloud-function.png" />
@@ -92,10 +93,15 @@ const Body = styled.div`
 const ChipContainer = styled.div`
   display: flex;
   gap: 8px;
+  margin-top: 16px;
 `;
 
 const SubTitle = styled(Text)`
   margin-bottom: 24px;
+`;
+
+const IntroductionText = styled(Text)`
+  margin: 4px 0;
 `;
 
 const ParallaxImage1 = styled(DocusaurusImage)`

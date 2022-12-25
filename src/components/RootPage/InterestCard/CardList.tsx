@@ -27,7 +27,7 @@ const CardList = (props: Props) => {
   return (
     <CardListContainer>
       {INTEREST_LIST.map((card) => (
-        <InterestCard {...card} key={card.title} />
+        <InterestCard {...card} key={card.frontProps.title} />
       ))}
     </CardListContainer>
   );
@@ -42,28 +42,61 @@ const CardListContainer = styled.div`
 
 const INTEREST_LIST: ICard[] = [
   {
-    title: "UI/UX",
-    description: "인터렉션을 통해 사용자와 소통합니다.",
-    backgroundColor: "#f54290",
-    imageUrl: "img/RootPage/interaction.png",
+    frontProps: {
+      title: "UI/UX",
+      description: "인터렉션을 통해 사용자와 소통합니다.",
+      backgroundColor: "#f54290",
+      imageUrl: "img/RootPage/interaction.png",
+    },
+    backProps: {
+      title: "더 나은 경험을 위해",
+      description:
+        "프론트엔드 개발자의 핵심 역량은, 좋은 사용자 경험을 제공하는 것에 있다고 생각합니다.",
+      backgroundColor: "#f54290",
+      imageUrl: "img/RootPage/interaction.png",
+    },
   },
   {
-    title: "클라우드",
-    description: "클라우드가 가진 무한한 가능성을 믿고 있습니다.",
-    backgroundColor: "#f5a742",
-    imageUrl: "img/RootPage/lambda.png",
+    frontProps: {
+      title: "클라우드",
+      description: "클라우드가 가진 무한한 가능성을 믿고 있습니다.",
+      backgroundColor: "#f5a742",
+      imageUrl: "img/RootPage/lambda.png",
+    },
+    backProps: {
+      title: "클라우드",
+      description: "클라우드가 가진 무한한 가능성을 믿고 있습니다.",
+      backgroundColor: "#f5a742",
+      imageUrl: "img/RootPage/lambda.png",
+    },
   },
   {
-    title: "프론트엔드",
-    description: "프론트엔드는 사용자 경험을 만듭니다.",
-    backgroundColor: "#2bcf93",
-    imageUrl: "",
+    frontProps: {
+      title: "프론트엔드",
+      description: "프론트엔드는 사용자 경험을 만듭니다.",
+      backgroundColor: "#2bcf93",
+      imageUrl: "",
+    },
+    backProps: {
+      title: "프론트엔드",
+      description: "프론트엔드는 사용자 경험을 만듭니다.",
+      backgroundColor: "#2bcf93",
+      imageUrl: "",
+    },
   },
   {
-    title: "컨테이너",
-    description: "컨테이너 가상화가 보여주는 기술들에도 관심이 많습니다.",
-    backgroundColor: "#3281db",
-    imageUrl: "img/RootPage/container.png",
+    frontProps: {
+      title: "컨테이너",
+      description: "컨테이너 가상화가 보여주는 기술들에도 관심이 많습니다.",
+      backgroundColor: "#3281db",
+      imageUrl: "img/RootPage/container.png",
+    },
+    backProps: {
+      title: "컨테이너",
+      description: "컨테이너 가상화가 보여주는 기술들에도 관심이 많습니다.",
+      backgroundColor: "#3281db",
+      imageUrl: "img/RootPage/container.png",
+    },
   },
 ];
 

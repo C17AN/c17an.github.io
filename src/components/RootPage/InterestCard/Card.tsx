@@ -3,21 +3,29 @@ import { motion, TargetAndTransition, VariantLabels } from "framer-motion";
 import React from "react";
 import FlippableCard from "../../common/FlippableWrapper";
 import DocusaurusImage from "../../common/DocusaurusImage";
+import { IoArrowForwardCircle } from "react-icons/io5";
 
 export interface ICard {
-  title: string;
-  description: string;
-  imageUrl: string;
-  backgroundColor: string;
+  frontProps: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    backgroundColor: string;
+  };
+
+  backProps: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    backgroundColor: string;
+  };
 }
 
-const Card = ({ title, description, imageUrl, backgroundColor }: ICard) => {
-  const frontProps = { title, description, imageUrl, backgroundColor };
-
+const Card = ({ frontProps, backProps }: ICard) => {
   return (
     <FlippableCard
       cardFront={<CardFront {...frontProps} />}
-      cardBack={<CardBack {...frontProps} />}
+      cardBack={<CardBack {...backProps} />}
     />
   );
 };
@@ -27,20 +35,26 @@ const CardFront = ({
   description,
   imageUrl,
   backgroundColor,
-}: ICard) => {
+}: ICard[keyof Pick<ICard, "frontProps">]) => {
   return (
     <Container backgroundColor={backgroundColor} className="interest-card">
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
-      <CardImage src={imageUrl} alt={title} />
+      <ArrowIcon size={60} color={"white"} />
+      {/* <CardImage src={imageUrl} alt={title} /> */}
     </Container>
   );
 };
 
-const CardBack = ({ title, description, imageUrl, backgroundColor }: ICard) => {
+const CardBack = ({
+  title,
+  description,
+  imageUrl,
+  backgroundColor,
+}: ICard[keyof Pick<ICard, "frontProps">]) => {
   return (
     <Container backgroundColor={backgroundColor} className="interest-card">
-      <CardTitle>{title}dd</CardTitle>
+      <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       <CardImage src={imageUrl} alt={title} />
     </Container>
@@ -72,6 +86,12 @@ const CardTitle = styled.h3`
 const CardDescription = styled.p`
   font-size: 18px;
   font-weight: 600;
+`;
+
+const ArrowIcon = styled(IoArrowForwardCircle)`
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
 `;
 
 const CardImage = styled(DocusaurusImage)`

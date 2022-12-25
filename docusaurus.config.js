@@ -70,7 +70,7 @@ const config = {
             label: "문서",
           },
           { to: "/blog", label: "블로그", position: "left" },
-          { to: "/museum", label: "잡동사니", position: "left" },
+          { to: "/visitor", label: "명함 주고받기", position: "left" },
           {
             href: "https://github.com/c17an",
             label: "GitHub",

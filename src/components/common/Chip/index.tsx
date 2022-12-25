@@ -20,7 +20,7 @@ const ChipContainer = styled.div<{ backgroundColor?: string; color?: string }>`
   display: flex;
   align-items: center;
   font-size: 12px;
-  padding: 4px 12px;
+  padding: 8px 12px;
   font-weight: 600;
   border-radius: 20px;
   cursor: pointer;
