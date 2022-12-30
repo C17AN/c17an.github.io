@@ -6,13 +6,13 @@ import DocusaurusImage from "../../common/DocusaurusImage";
 import { IoArrowForwardCircle } from "react-icons/io5";
 
 export interface ICard {
+  theme: "dark" | "light";
   frontProps: {
     title: string;
     description: string;
     imageUrl: string;
     backgroundColor: string;
   };
-
   backProps: {
     title: string;
     description: string;
@@ -81,6 +81,7 @@ const CardTitle = styled.h3`
   font-size: 32px;
   color: #eee;
   font-weight: 800;
+  margin-bottom: 12px;
 `;
 
 const CardDescription = styled.p`

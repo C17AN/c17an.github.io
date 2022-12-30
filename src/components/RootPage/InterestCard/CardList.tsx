@@ -42,6 +42,7 @@ const CardListContainer = styled.div`
 
 const INTEREST_LIST: ICard[] = [
   {
+    theme: "light",
     frontProps: {
       title: "UI/UX",
       description: "인터렉션을 통해 사용자와 소통합니다.",
@@ -57,6 +58,7 @@ const INTEREST_LIST: ICard[] = [
     },
   },
   {
+    theme: "dark",
     frontProps: {
       title: "클라우드",
       description: "클라우드가 가진 무한한 가능성을 믿고 있습니다.",
@@ -71,6 +73,7 @@ const INTEREST_LIST: ICard[] = [
     },
   },
   {
+    theme: "dark",
     frontProps: {
       title: "프론트엔드",
       description: "프론트엔드는 사용자 경험을 만듭니다.",
@@ -85,6 +88,7 @@ const INTEREST_LIST: ICard[] = [
     },
   },
   {
+    theme: "light",
     frontProps: {
       title: "컨테이너",
       description: "컨테이너 가상화가 보여주는 기술들에도 관심이 많습니다.",

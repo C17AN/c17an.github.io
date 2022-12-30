@@ -9,6 +9,7 @@ import Text from "../common/Text";
 import ExperienceList from "./Experiences/ExperienceList";
 import Hero from "./Hero";
 import InterestCardList from "./InterestCard/CardList";
+import FirstSection from "./Sections/FirstSection";
 
 type Props = {};
 
@@ -30,26 +31,7 @@ const RootPage = (props: Props) => {
     <Container ref={containerRef}>
       {/* <Hero /> */}
       <Body>
-        <Text typography="h1" ref={text1Ref}>
-          안녕하세요!
-        </Text>
-        <Text typography="h1" ref={text1Ref}>
-          프론트엔드 개발자, 김찬민입니다.
-        </Text>
-        <ChipContainer>
-          <Chip text="LinkedIn" backgroundColor="#0e76a8" color="#fff" />
-          <Chip text="Github" backgroundColor="#000" color="#fff" />
-        </ChipContainer>
-        <IntroductionContainer>
-          <IntroductionText>
-            복잡한 정보를 예쁘고 간단하게 전달할 수 있는 UI의 매력에 이끌려
-            프론트엔드 개발을 시작하게 되었습니다.
-          </IntroductionText>
-          <IntroductionText>
-            새로운 기술을 배우는 것을 두려워하지 않으며, 기술로 더 편리한 세상을
-            만드는 데에 기여하고 싶습니다.
-          </IntroductionText>
-        </IntroductionContainer>
+        <FirstSection />
         <SubTitle typography="h3" ref={text2Ref}>
           이런 기술들에 관심이 많습니다.
         </SubTitle>
