@@ -391,9 +391,11 @@
           setTimeout(()=>$('#preloader-count').remove(),750);
           setTimeout(()=>$('#floating-logo').classList.add('is-settled'),2000);
         }
-        const fallback=setTimeout(finish,9000);
+        let fallback=setTimeout(finish,9000);
         async function play(){
           if(finished)return;
+          clearTimeout(fallback);
+          fallback=setTimeout(finish,6000);
           preloaderVideo.playbackRate=Math.max(.25,preloaderVideo.duration/3);
           preloaderVideo.currentTime=0;
           preloaderVideo.addEventListener('ended',finish,{once:true});
