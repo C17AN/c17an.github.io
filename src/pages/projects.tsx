@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import styles from "./projects.module.css";
+import { useProjectsMotion } from "../components/ProjectsMotion/useProjectsMotion";
 
 type Project = {
   year: string;
@@ -62,29 +63,34 @@ const projects: Project[] = [
 ];
 
 export default function ProjectsPage(): JSX.Element {
+  const pageRef = useProjectsMotion();
+
   return (
     <Layout title="Three.js 프로젝트" description="Three.js로 만든 인터랙티브 3D 프로젝트 모음">
-      <main className={styles.page}>
+      <main className={styles.page} ref={pageRef}>
         <div className={styles.content}>
           <header className={styles.hero}>
             <div>
-              <p className={styles.eyebrow}>인터랙티브 3D 프로젝트</p>
-              <h1>코드로 만든<br /><span>장면들.</span></h1>
+              <p className={styles.eyebrow} data-motion-hero>인터랙티브 3D 프로젝트</p>
+              <h1>
+                <span className={styles.heroLine} data-motion-hero>코드로 만든</span>
+                <span className={styles.heroLineAccent} data-motion-hero>장면들.</span>
+              </h1>
             </div>
-            <p className={styles.intro}>
+            <p className={styles.intro} data-motion-hero>
               Three.js로 구현한 장면들입니다. 이미지를 눌러 직접 움직이고 살펴보세요.
             </p>
           </header>
 
           <section id="works" aria-labelledby="works-title">
-            <div className={styles.sectionHeading}>
+            <div className={styles.sectionHeading} data-motion-section>
               <h2 id="works-title">프로젝트</h2>
               <span>{projects.length}개 작업</span>
             </div>
             <div className={styles.projectList}>
               {projects.map((project, index) => (
-                <article className={styles.project} key={project.demo}>
-                  <a className={styles.preview} href={project.demo} aria-label={`${project.title} 프로젝트 열기`}>
+                <article className={styles.project} key={project.demo} data-motion-project>
+                  <a className={styles.preview} href={project.demo} aria-label={`${project.title} 프로젝트 열기`} data-motion-preview>
                     <img
                       src={project.preview}
                       alt={project.previewAlt}
@@ -94,7 +100,7 @@ export default function ProjectsPage(): JSX.Element {
                       decoding="async"
                     />
                   </a>
-                  <div className={styles.projectBody}>
+                  <div className={styles.projectBody} data-motion-body>
                     <p className={styles.meta}>{project.category} <span>·</span> {project.year}</p>
                     <h3><a href={project.demo}>{project.title}</a></h3>
                     <p className={styles.description}>{project.description}</p>
