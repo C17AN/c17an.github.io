@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e9e8e3" />
+  <meta name="description" content="Three.js로 만든 포르쉐 타이칸의 인터랙티브 3D 모델" />
+  <title>PORSCHE TAYCAN — Three.js Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--paper:#e9e8e3;--ink:#222725;--muted:#747b78;--line:#cbd0cc;--accent:#bd533d;--mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--serif:'Playfair Display',Georgia,serif}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E")}
+    .page{max-width:1500px;margin:auto;padding:0 6vw;position:relative;z-index:1}.topbar{height:82px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{font-size:14px;font-weight:700;letter-spacing:.15em}.brand a{color:inherit;text-decoration:none}.brand i{color:var(--accent);font-style:normal}.topmeta,.eyebrow,.label,.facts,.footer,.color-label{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.topmeta{display:flex;gap:24px}.topmeta span:last-child{color:var(--accent)}
+    main{min-height:calc(100vh - 140px);display:grid;grid-template-columns:minmax(290px,.7fr) minmax(430px,1.3fr);align-items:center;gap:2.5vw;padding:36px 0 46px}.copy{position:relative;z-index:2;padding-bottom:2vh}.eyebrow{display:flex;align-items:center;gap:10px;color:var(--accent);margin:0 0 27px}.eyebrow:before{content:"";width:24px;height:1px;background:var(--accent)}h1{font:500 clamp(48px,6.6vw,91px)/.94 var(--serif);letter-spacing:-.06em;margin:0 0 27px}h1 em{color:var(--accent);font-weight:500}h1 span{font-family:var(--sans);font-size:.84em;font-weight:600;letter-spacing:-.075em}.intro{max-width:360px;color:#69716d;font-size:13px;line-height:1.9;margin:0 0 32px}.facts{display:grid;grid-template-columns:1fr 1fr;max-width:360px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;gap:16px}.fact b{display:block;font:500 19px var(--serif);letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}.fact span{font-size:8px}.colors{margin-top:25px}.color-label{margin-bottom:12px}.swatches{display:flex;gap:11px}.swatch{border:2px solid transparent;background:none;padding:3px;border-radius:50%;width:36px;height:36px;cursor:pointer;display:grid;place-items:center}.swatch[aria-pressed="true"]{border-color:var(--ink)}.swatch span{display:block;width:24px;height:24px;border-radius:50%;border:1px solid #0002}.swatch:hover{transform:scale(1.08)}
+    .stage{height:min(61vw,650px);min-height:410px;position:relative;display:grid;place-items:center;isolation:isolate}.stage:before{content:"";position:absolute;width:min(52vw,620px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#c8d0cd 0,#dae0db 47%,transparent 72%);filter:blur(5px);z-index:-1}.scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.scene:active{cursor:grabbing}.annotation{position:absolute;right:1%;top:10%;display:flex;align-items:center;gap:9px;color:#818986;font:9px var(--mono);letter-spacing:.12em}.annotation:before{content:"";width:25px;height:1px;background:var(--accent)}.model-caption{position:absolute;left:2%;bottom:7%;color:#89908b;font:9px var(--mono);letter-spacing:.11em}.model-caption b{font-weight:500;color:var(--accent)}.controls{position:absolute;right:1%;bottom:5%;display:flex;gap:7px}.controls button{border:1px solid #bdc5bf;background:#e9e8e3c9;color:#56605b;border-radius:999px;padding:9px 12px;font:9px var(--mono);letter-spacing:.07em;cursor:pointer;backdrop-filter:blur(8px)}.controls button:hover{border-color:var(--accent);color:var(--accent)}.footer{height:58px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-size:8px}.footer a{color:inherit;text-decoration:none}.footer .live{color:var(--accent)}
+    @media(max-width:850px){.page{padding:0 6vw}.topbar{height:70px}.topmeta{font-size:8px;gap:12px}main{grid-template-columns:1fr;gap:0;padding:20px 0 30px}.stage{order:0;height:min(85vw,520px);min-height:300px;margin:0 -5vw}.copy{order:1;padding:12px 0 25px}.stage:before{width:75vw}.annotation{right:5%;top:10%}.model-caption{left:8%;bottom:2%}.controls{right:5%;bottom:1%}h1{font-size:clamp(56px,12vw,82px)}.intro{max-width:490px}.facts{max-width:490px}}
+    @media(max-width:480px){.topmeta span:first-child{display:none}.stage{min-height:280px}.annotation{font-size:7px}.model-caption{font-size:7px}.controls button{padding:8px;font-size:8px}.footer{font-size:7px}.footer span:last-child{max-width:120px;text-align:right;line-height:1.7}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar"><div class="brand"><a href="/projects">C17AN <i>·</i> THREE.JS STUDIES</a></div><div class="topmeta"><span>AUTOMOTIVE STUDY</span><span>NO. 003 &nbsp;·&nbsp; TAYCAN</span></div></header>
+    <main>
+      <section class="copy">
+        <p class="eyebrow">ELECTRIC SPORTS SEDAN / 3D STUDY</p>
+        <h1>PORSCHE<br/><span><em>TAYCAN.</em></span></h1>
+        <p class="intro">낮고 넓은 차체와 길게 이어지는 지붕선, 네 점의 전면 조명과 후면 라이트 바. 타이칸의 인상을 Three.js 메시로 구성했습니다. 드래그해 원하는 각도에서 살펴보세요.</p>
+        <div class="facts"><div class="fact"><b>Electric</b><span>POWERTRAIN</span></div><div class="fact"><b>4-door</b><span>SPORTS SEDAN</span></div></div>
+        <div class="colors"><div class="color-label">BODY FINISH / SELECT A COLOR</div><div class="swatches" role="group" aria-label="차체 색상 선택"><button class="swatch" data-color="#c9c8c0" aria-label="펄 화이트" aria-pressed="true"><span style="background:#c9c8c0"></span></button><button class="swatch" data-color="#819ba6" aria-label="아이스 블루" aria-pressed="false"><span style="background:#819ba6"></span></button><button class="swatch" data-color="#853e3d" aria-label="체리 메탈릭" aria-pressed="false"><span style="background:#853e3d"></span></button></div></div>
+      </section>
+      <section class="stage" aria-label="Three.js로 구현한 포르쉐 타이칸 3D 모델">
+        <canvas id="scene" class="scene"></canvas>
+        <div class="annotation">SCULPTED ELECTRIC FORM</div>
+        <div class="model-caption"><b>01</b> &nbsp; TAYCAN / STYLIZED 3D MODEL</div>
+        <div class="controls"><button id="reset" type="button">RESET VIEW</button><button id="motion" type="button" aria-pressed="true">PAUSE ROTATION</button></div>
+      </section>
+    </main>
+    <footer class="footer"><a href="/projects">← &nbsp; THREE.JS PROJECTS</a><span class="live">● &nbsp; MODEL READY</span><span>BUILT WITH THREE.JS</span></footer>
+  </div>
+  <script type="module">
+    import * as THREE from 'three';
+    import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+    const canvas=document.querySelector('#scene');
+    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    renderer.outputColorSpace=THREE.SRGBColorSpace;
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure=1.14;
+    renderer.shadowMap.enabled=true;
+    renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(34,1,.1,100);
+    camera.position.set(7.6,3.9,8.7);
+    const controls=new OrbitControls(camera,canvas);
+    controls.target.set(0,.77,0);
+    controls.enableDamping=true;controls.dampingFactor=.06;
+    controls.enablePan=false;controls.minDistance=6.2;controls.maxDistance=18;
+    controls.minPolarAngle=.22;controls.maxPolarAngle=1.48;
+    controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    controls.autoRotateSpeed=.56;
+
+    scene.add(new THREE.HemisphereLight(0xf5f8f5,0x536268,2.6));
+    const key=new THREE.DirectionalLight(0xfff1df,3.3);key.position.set(-4,8,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;scene.add(key);
+    const rim=new THREE.DirectionalLight(0xc6e4ed,2.6);rim.position.set(5,5,-6);scene.add(rim);
+    const warm=new THREE.DirectionalLight(0xf4d1c2,1.1);warm.position.set(4,3,5);scene.add(warm);
+    const mat=(color,roughness=.45,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
+    const bodyMat=new THREE.MeshPhysicalMaterial({color:'#c9c8c0',metalness:.58,roughness:.25,clearcoat:1,clearcoatRoughness:.13});
+    const glassMat=new THREE.MeshPhysicalMaterial({color:'#182931',metalness:.24,roughness:.19,clearcoat:1,clearcoatRoughness:.12,side:THREE.DoubleSide});
+    const dark=mat('#1f2528',.49,.13),trim=mat('#303b40',.36,.48),rubber=mat('#161a1c',.92),rimMat=mat('#b7babe',.28,.78);
+    const car=new THREE.Group();scene.add(car);
+    function box(parent,w,h,d,material,x,y,z){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
+
+    // The lower body follows a long, low sports-sedan profile. Every ring forms one cross-section.
+    const sections=[
+      {x:-2.79,w:.70,top:.77,bottom:.43},{x:-2.58,w:.88,top:.88,bottom:.37},
+      {x:-1.95,w:.99,top:.98,bottom:.32},{x:-.75,w:1.02,top:1.04,bottom:.31},
+      {x:.55,w:1.02,top:1.03,bottom:.31},{x:1.7,w:.97,top:.92,bottom:.34},
+      {x:2.42,w:.82,top:.78,bottom:.41},{x:2.72,w:.58,top:.65,bottom:.48}
+    ];
+    const ring=s=>[
+      [-s.w*.82,s.top+.015],[-s.w,s.top-.12],[-s.w*.98,.49],[-s.w*.77,s.bottom],
+      [s.w*.77,s.bottom],[s.w*.98,.49],[s.w,s.top-.12],[s.w*.82,s.top+.015]
+    ];
+    const bodyPositions=[],bodyIndices=[];
+    sections.forEach(s=>ring(s).forEach(([z,y])=>bodyPositions.push(s.x,y,z)));
+    for(let i=0;i<sections.length-1;i++)for(let j=0;j<8;j++){
+      const a=i*8+j,b=i*8+(j+1)%8,c=(i+1)*8+j,d=(i+1)*8+(j+1)%8;
+      bodyIndices.push(a,c,b,b,c,d);
+    }
+    for(const [i,flip] of [[0,true],[sections.length-1,false]]){
+      const s=sections[i],start=bodyPositions.length/3;
+      bodyPositions.push(s.x,(s.top+s.bottom)/2,0);
+      for(let j=0;j<8;j++)bodyIndices.push(start,i*8+(flip?(j+1)%8:j),i*8+(flip?j:(j+1)%8));
+    }
+    const bodyGeo=new THREE.BufferGeometry();bodyGeo.setAttribute('position',new THREE.Float32BufferAttribute(bodyPositions,3));bodyGeo.setIndex(bodyIndices);bodyGeo.computeVertexNormals();
+    const body=new THREE.Mesh(bodyGeo,bodyMat);body.castShadow=true;body.receiveShadow=true;car.add(body);
+    box(car,4.55,.09,1.77,dark,-.02,.35,0);
+    box(car,1.68,.12,1.53,dark,0,.28,0);
+
+    // Wraparound glass canopy and the recognizable fastback roofline.
+    const canopySections=[
+      {x:-1.84,w:.79,lower:.99,upper:1.00},
+      {x:-1.00,w:.66,lower:1.00,upper:1.47},
+      {x:.39,w:.67,lower:1.02,upper:1.49},
+      {x:1.25,w:.79,lower:.97,upper:.99}
+    ];
+    const canopyPositions=[],canopyIndices=[];
+    canopySections.forEach(s=>{
+      canopyPositions.push(s.x,s.lower,-s.w,s.x,s.upper,-s.w*.83,s.x,s.upper,s.w*.83,s.x,s.lower,s.w);
+    });
+    for(let i=0;i<canopySections.length-1;i++)for(let j=0;j<3;j++){
+      const a=i*4+j,b=(i+1)*4+j;canopyIndices.push(a,b,a+1,b,b+1,a+1);
+    }
+    const canopyGeo=new THREE.BufferGeometry();canopyGeo.setAttribute('position',new THREE.Float32BufferAttribute(canopyPositions,3));canopyGeo.setIndex(canopyIndices);canopyGeo.computeVertexNormals();
+    const canopy=new THREE.Mesh(canopyGeo,glassMat);canopy.castShadow=true;car.add(canopy);
+    function rail(points,material,radius=.018){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,28,radius,8,false),material);mesh.castShadow=true;car.add(mesh);return mesh}
+    for(const side of [-1,1]){
+      rail(canopySections.map(s=>[s.x,s.upper+.015,side*s.w*.84]),bodyMat,.028);
+      rail(canopySections.map(s=>[s.x,s.lower,side*s.w]),trim,.018);
+      rail([[-.36,1.02,side*.71],[-.36,1.45,side*.56]],trim,.021);
+      rail([[1.22,.98,side*.81],[.40,1.49,side*.56]],trim,.016);
+      rail([[-1.82,.99,side*.78],[-1.00,1.47,side*.55]],trim,.016);
+      const mirror=new THREE.Mesh(new THREE.SphereGeometry(.14,20,12),bodyMat);mirror.scale.set(1.3,.45,.65);mirror.position.set(1.07,1.05,side*.91);mirror.castShadow=true;car.add(mirror);
+      box(car,.34,.045,.08,trim,1.09,1.02,side*.93);
+      for(const doorX of [-.86,.38]){
+        rail([[doorX,.52,side*1.035],[doorX,.93,side*1.035]],trim,.009);
+      }
+      for(const handleX of [-1.10,.24])box(car,.24,.025,.018,trim,handleX,.89,side*1.035);
+      box(car,3.24,.09,.06,trim,-.05,.44,side*.975);
+    }
+    const roofGlass=box(car,1.17,.013,1.03,glassMat,-.30,1.49,0);roofGlass.rotation.z=.012;
+
+    // Tires, five twin-spoke rims, brakes and the upper wheel arch outline.
+    function wheel(x,side){
+      const z=side*.96,y=.50;
+      const tire=new THREE.Mesh(new THREE.CylinderGeometry(.49,.49,.30,48),rubber);tire.rotation.x=Math.PI/2;tire.position.set(x,y,z);tire.castShadow=true;car.add(tire);
+      const outer=side*1.125;
+      const disc=new THREE.Mesh(new THREE.CircleGeometry(.35,48),mat('#252d32',.42,.42));disc.position.set(x,y,outer);if(side<0)disc.rotation.y=Math.PI;car.add(disc);
+      const rim=new THREE.Mesh(new THREE.TorusGeometry(.34,.04,10,48),rimMat);rim.position.set(x,y,outer+side*.012);car.add(rim);
+      for(let k=0;k<10;k++){
+        const angle=k/10*Math.PI*2;
+        const spoke=box(car,.042,.28,.025,rimMat,x+Math.sin(angle)*.15,y+Math.cos(angle)*.15,outer+side*.018);
+        spoke.rotation.z=-angle;
+      }
+      const hub=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,.025,32),trim);hub.rotation.x=Math.PI/2;hub.position.set(x,y,outer+side*.03);car.add(hub);
+      const arch=new THREE.Mesh(new THREE.TorusGeometry(.55,.018,8,48,Math.PI),trim);
+      arch.position.set(x,y,side*1.045);car.add(arch);
+    }
+    for(const x of [-1.73,1.68])for(const side of [-1,1])wheel(x,side);
+
+    // Taycan-inspired four-point headlights, front intakes and continuous rear LED bar.
+    for(const side of [-1,1]){
+      const housing=box(car,.24,.065,.35,dark,2.37,.81,side*.66);housing.rotation.y=side*.11;
+      const lampMat=new THREE.MeshStandardMaterial({color:0xe1eef3,emissive:0xb9e8f3,emissiveIntensity:2.2,roughness:.22});
+      for(const dz of [-.075,.075])for(const dy of [-.024,.024])box(car,.07,.018,.05,lampMat,2.52,.81+dy,side*.66+dz);
+      box(car,.08,.17,.31,dark,2.65,.52,side*.57);
+      box(car,.12,.32,.07,dark,2.65,.54,side*.81);
+    }
+    box(car,.055,.12,1.50,dark,2.73,.50,0);
+    const rearLamp=new THREE.MeshStandardMaterial({color:0xa71d24,emissive:0xf12e35,emissiveIntensity:1.8,roughness:.3});
+    box(car,.04,.045,1.62,rearLamp,-2.805,.82,0);
+    box(car,.05,.18,1.36,dark,-2.805,.53,0);
+    const labelCanvas=document.createElement('canvas');labelCanvas.width=512;labelCanvas.height=128;
+    const ctx=labelCanvas.getContext('2d');ctx.clearRect(0,0,512,128);ctx.fillStyle='#e4e3db';ctx.font='600 60px Arial';ctx.textAlign='center';ctx.letterSpacing='8px';ctx.fillText('TAYCAN',256,87);
+    const labelTexture=new THREE.CanvasTexture(labelCanvas);labelTexture.colorSpace=THREE.SRGBColorSpace;
+    const label=new THREE.Mesh(new THREE.PlaneGeometry(.76,.18),new THREE.MeshBasicMaterial({map:labelTexture,transparent:true,side:THREE.DoubleSide}));label.rotation.y=-Math.PI/2;label.position.set(-2.835,.68,0);car.add(label);
+
+    // A quiet studio platform and contact shadow.
+    const platform=new THREE.Mesh(new THREE.CylinderGeometry(4.25,4.32,.14,96),mat('#c8ceca',.83,.08));platform.position.y=-.14;platform.receiveShadow=true;scene.add(platform);
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(3.84,.012,8,128),mat('#879b99',.35,.56));ring.rotation.x=Math.PI/2;ring.position.y=-.063;scene.add(ring);
+    const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.19}));floor.rotation.x=-Math.PI/2;floor.position.y=-.065;floor.receiveShadow=true;scene.add(floor);
+
+    const resize=()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
+    new ResizeObserver(resize).observe(canvas);resize();
+    document.querySelector('#reset').addEventListener('click',()=>{camera.position.set(7.6,3.9,8.7);controls.target.set(0,.77,0);controls.update()});
+    const motionButton=document.querySelector('#motion');motionButton.setAttribute('aria-pressed',String(controls.autoRotate));motionButton.textContent=controls.autoRotate?'PAUSE ROTATION':'RESUME ROTATION';
+    motionButton.addEventListener('click',()=>{controls.autoRotate=!controls.autoRotate;motionButton.textContent=controls.autoRotate?'PAUSE ROTATION':'RESUME ROTATION';motionButton.setAttribute('aria-pressed',String(controls.autoRotate))});
+    for(const button of document.querySelectorAll('.swatch'))button.addEventListener('click',()=>{
+      bodyMat.color.set(button.dataset.color);
+      for(const swatch of document.querySelectorAll('.swatch'))swatch.setAttribute('aria-pressed',String(swatch===button));
+    });
+    function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)}animate();
+  </script>
+</body>
+</html>

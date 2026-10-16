@@ -38,6 +38,17 @@ const projects: Project[] = [
     repo: "https://github.com/C17AN/c17an.github.io/tree/master/static/lotte-tower",
     demo: "/lotte-tower/",
   },
+  {
+    number: "03",
+    year: "2026",
+    title: "PORSCHE TAYCAN",
+    category: "AUTOMOTIVE · 3D",
+    description:
+      "포르쉐 타이칸의 낮은 차체와 패스트백 실루엣을 Three.js로 모델링했습니다. 색상을 바꾸고 360도로 살펴볼 수 있습니다.",
+    tags: ["Three.js", "Procedural 3D", "OrbitControls"],
+    repo: "https://github.com/C17AN/c17an.github.io/tree/master/static/taycan",
+    demo: "/taycan/",
+  },
 ];
 
 export default function ProjectsPage(): JSX.Element {
@@ -66,7 +77,6 @@ export default function ProjectsPage(): JSX.Element {
 
         <section
           className={styles.grid}
-          style={{ gridTemplateColumns: "minmax(0, 760px)" }}
           aria-label="Three.js 프로젝트 목록"
         >
           {projects.map((project) => (
