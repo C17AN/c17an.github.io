@@ -173,7 +173,7 @@
 
     // A quiet studio platform and contact shadow.
     const platform=new THREE.Mesh(new THREE.CylinderGeometry(4.25,4.32,.14,96),mat('#c8ceca',.83,.08));platform.position.y=-.14;platform.receiveShadow=true;scene.add(platform);
-    const ring=new THREE.Mesh(new THREE.TorusGeometry(3.84,.012,8,128),mat('#879b99',.35,.56));ring.rotation.x=Math.PI/2;ring.position.y=-.063;scene.add(ring);
+    const platformRing=new THREE.Mesh(new THREE.TorusGeometry(3.84,.012,8,128),mat('#879b99',.35,.56));platformRing.rotation.x=Math.PI/2;platformRing.position.y=-.063;scene.add(platformRing);
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.19}));floor.rotation.x=-Math.PI/2;floor.position.y=-.065;floor.receiveShadow=true;scene.add(floor);
 
     const resize=()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
