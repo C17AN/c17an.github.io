@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#e9e8e3" />
+  <meta name="theme-color" content="#080e15" />
   <meta name="description" content="포르쉐 타이칸 터보 GT의 실제 형상을 살펴보는 인터랙티브 Three.js 뷰어" />
   <title>PORSCHE TAYCAN — Three.js Study</title>
   <link rel="stylesheet" href="/fonts/pretendard.css" />
@@ -17,6 +17,13 @@
     @media(max-width:850px){.page{padding:0 6vw}.topbar{height:70px}.topmeta{font-size:8px;gap:12px}main{grid-template-columns:1fr;gap:0;padding:20px 0 30px}.stage{order:0;height:min(85vw,520px);min-height:300px;margin:0 -5vw}.copy{order:1;padding:12px 0 25px}.stage:before{width:75vw}.annotation{right:5%;top:10%}.model-caption{left:8%;bottom:2%}.controls{right:5%;bottom:1%}h1{font-size:clamp(56px,12vw,82px)}.intro{max-width:490px}.facts{max-width:490px}}
     @media(max-width:480px){.topmeta span:first-child{display:none}.stage{min-height:280px}.annotation{font-size:7px}.model-caption{font-size:7px}.controls button{padding:8px;font-size:8px}.footer{font-size:7px}.footer span:last-child{max-width:120px;text-align:right;line-height:1.7}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+    :root{--paper:#080e15;--ink:#eff6f7;--muted:#94afba;--line:#2b4755;--accent:#ff7949;--sky:#88dafa}
+    body{background:radial-gradient(ellipse 48% 65% at 75% 41%,#17384d 0,transparent 79%),var(--paper)}
+    .topmeta span:last-child,.eyebrow,.model-caption b,.footer .live{color:var(--sky)}.eyebrow:before,.annotation:before{background:var(--sky)}
+    h1 em{color:var(--accent)}.intro{color:#b7c9d0}.fact b{color:var(--ink)}.color-label{color:var(--sky)}.swatch[aria-pressed="true"]{border-color:var(--sky)}.swatch span{border-color:#ffffff66}
+    .stage:before{background:radial-gradient(circle,#25546a 0,#153245 46%,transparent 76%);filter:blur(11px)}.annotation,.model-caption{color:#acc9d5}.load-status{color:var(--sky)}
+    .controls button{background:#0b202cda;border-color:#557b8d;color:#d9f2f7}.controls button:hover{background:var(--accent);border-color:var(--accent);color:#0b1218}
+    .footer{color:var(--muted)}button:focus-visible,a:focus-visible{outline:2px solid var(--sky);outline-offset:4px}
   </style>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
@@ -27,9 +34,9 @@
       <section class="copy">
         <p class="eyebrow">ELECTRIC SPORTS SEDAN / 3D STUDY</p>
         <h1>PORSCHE<br/><span><em>TAYCAN.</em></span></h1>
-        <p class="intro">실제 타이칸 터보 GT의 차체와 디테일을 담은 3D 모델입니다. 차체를 드래그해 앞뒤와 측면을 살펴보세요.</p>
+        <p class="intro">빛의 각도에 따라 달라지는 차체의 곡선. 드래그해 타이칸 터보 GT의 앞뒤와 측면을 살펴보고, 컬러를 바꿔 보세요.</p>
         <div class="facts"><div class="fact"><b>Electric</b><span>POWERTRAIN</span></div><div class="fact"><b>4-door</b><span>SPORTS SEDAN</span></div></div>
-        <div class="colors"><div class="color-label">BODY FINISH / SELECT A COLOR</div><div class="swatches" role="group" aria-label="차체 색상 선택"><button class="swatch" data-color="#d8d7d0" aria-label="펄 화이트" aria-pressed="true"><span style="background:#d8d7d0"></span></button><button class="swatch" data-color="#698da2" aria-label="아이스 블루" aria-pressed="false"><span style="background:#698da2"></span></button><button class="swatch" data-color="#8b4141" aria-label="체리 메탈릭" aria-pressed="false"><span style="background:#8b4141"></span></button></div></div>
+        <div class="colors"><div class="color-label">BODY FINISH / SELECT A COLOR</div><div class="swatches" role="group" aria-label="차체 색상 선택"><button class="swatch" data-color="#d8d7d0" aria-label="펄 화이트" aria-pressed="true"><span style="background:#d8d7d0"></span></button><button class="swatch" data-color="#79b8d5" aria-label="아이스 블루" aria-pressed="false"><span style="background:#79b8d5"></span></button><button class="swatch" data-color="#e46d3d" aria-label="선셋 오렌지" aria-pressed="false"><span style="background:#e46d3d"></span></button><button class="swatch" data-color="#252b31" aria-label="옵시디언 블랙" aria-pressed="false"><span style="background:#252b31"></span></button></div></div>
       </section>
       <section class="stage" aria-label="Three.js로 구현한 포르쉐 타이칸 3D 모델">
         <canvas id="scene" class="scene"></canvas>
@@ -45,16 +52,20 @@
     import * as THREE from 'three';
     import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
     import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+    import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
     const canvas=document.querySelector('#scene');
     const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
     renderer.outputColorSpace=THREE.SRGBColorSpace;
     renderer.toneMapping=THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure=1.14;
+    renderer.toneMappingExposure=1.2;
     renderer.shadowMap.enabled=true;
     renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     const scene=new THREE.Scene();
+    const pmrem=new THREE.PMREMGenerator(renderer);
+    scene.environment=pmrem.fromScene(new RoomEnvironment()).texture;
+    pmrem.dispose();
     const camera=new THREE.PerspectiveCamera(34,1,.1,100);
     camera.position.set(6.1,2.9,6.9);
     const controls=new OrbitControls(camera,canvas);
@@ -65,10 +76,10 @@
     controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     controls.autoRotateSpeed=.56;
 
-    scene.add(new THREE.HemisphereLight(0xf5f8f5,0x536268,2.6));
-    const key=new THREE.DirectionalLight(0xfff1df,3.3);key.position.set(-4,8,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;scene.add(key);
-    const rim=new THREE.DirectionalLight(0xc6e4ed,2.6);rim.position.set(5,5,-6);scene.add(rim);
-    const warm=new THREE.DirectionalLight(0xf4d1c2,1.1);warm.position.set(4,3,5);scene.add(warm);
+    scene.add(new THREE.HemisphereLight(0xbfe8fa,0x1d3444,1.8));
+    const key=new THREE.DirectionalLight(0xffe0c2,4.2);key.position.set(-4,8,6);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;scene.add(key);
+    const rim=new THREE.DirectionalLight(0x72cbf4,3.8);rim.position.set(5,5,-6);scene.add(rim);
+    const warm=new THREE.DirectionalLight(0xff8e5e,1.6);warm.position.set(4,3,5);scene.add(warm);
     const mat=(color,roughness=.45,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
     const car=new THREE.Group();scene.add(car);
     const paintMaterials=[];
@@ -84,6 +95,9 @@
         if(object.material?.name.includes('Paint_Material')){
           object.material=object.material.clone();
           object.material.color.set('#d8d7d0');
+          object.material.metalness=.32;
+          object.material.roughness=.24;
+          object.material.envMapIntensity=1.5;
           paintMaterials.push(object.material);
         }
       });
@@ -105,10 +119,12 @@
       modelState.textContent='●   LOAD ERROR';
     });
 
-    // A quiet studio platform and contact shadow.
-    const platform=new THREE.Mesh(new THREE.CylinderGeometry(3.55,3.62,.14,96),mat('#c8ceca',.83,.08));platform.position.y=-.14;platform.receiveShadow=true;scene.add(platform);
-    const platformRing=new THREE.Mesh(new THREE.TorusGeometry(3.27,.012,8,128),mat('#879b99',.35,.56));platformRing.rotation.x=Math.PI/2;platformRing.position.y=-.063;scene.add(platformRing);
-    const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.19}));floor.rotation.x=-Math.PI/2;floor.position.y=-.065;floor.receiveShadow=true;scene.add(floor);
+    // Layered automotive display deck with precise light rings and grounded contact shadows.
+    const platform=new THREE.Mesh(new THREE.CylinderGeometry(3.55,3.62,.14,128),mat('#152a36',.58,.42));platform.position.y=-.14;platform.receiveShadow=true;scene.add(platform);
+    const underDeck=new THREE.Mesh(new THREE.CylinderGeometry(3.63,3.65,.10,128),mat('#0b1822',.35,.55));underDeck.position.y=-.24;scene.add(underDeck);
+    const platformRing=new THREE.Mesh(new THREE.TorusGeometry(3.39,.018,8,160),new THREE.MeshStandardMaterial({color:0x82dafa,emissive:0x358bb2,emissiveIntensity:1.1,metalness:.35,roughness:.28}));platformRing.rotation.x=Math.PI/2;platformRing.position.y=-.062;scene.add(platformRing);
+    const accentRing=new THREE.Mesh(new THREE.TorusGeometry(3.63,.014,8,160),new THREE.MeshStandardMaterial({color:0xff8559,emissive:0xb0441e,emissiveIntensity:.8,metalness:.35,roughness:.3}));accentRing.rotation.x=Math.PI/2;accentRing.position.y=-.18;scene.add(accentRing);
+    const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.36}));floor.rotation.x=-Math.PI/2;floor.position.y=-.064;floor.receiveShadow=true;scene.add(floor);
 
     const resize=()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
     new ResizeObserver(resize).observe(canvas);resize();
