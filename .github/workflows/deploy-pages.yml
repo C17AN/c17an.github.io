@@ -25,7 +25,9 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install --global yarn@1.22.22
+          yarn install --frozen-lockfile --non-interactive
       - name: Build Docusaurus site
         run: npm run build
       - name: Upload Pages artifact
