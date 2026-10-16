@@ -48,11 +48,11 @@ const projects: Project[] = [
     title: "PORSCHE TAYCAN",
     category: "AUTOMOTIVE / FORM",
     description:
-      "낮은 차체와 패스트백 실루엣을 모델링했습니다. 차체 색상을 바꾸며 360도로 살펴보세요.",
-    tags: ["THREE.JS", "ORBIT CONTROLS"],
+      "타이칸 터보 GT의 실제 형상을 3D로 감상하세요. 차체 색상을 바꾸며 360도로 살펴볼 수 있습니다.",
+    tags: ["THREE.JS", "GLTF", "ORBIT CONTROLS"],
     repo: "https://github.com/C17AN/c17an.github.io/tree/master/static/taycan",
     demo: "/taycan/",
-    preview: "/project-previews/taycan.webp",
+    preview: "/project-previews/taycan.jpg",
     previewAlt: "포르쉐 타이칸 3D 모델의 미리보기",
   },
 ];
