@@ -49,7 +49,10 @@
   word-break: keep-all;
 }
 
-.hero h1 span { color: var(--page-accent); }
+.heroLine,
+.heroLineAccent { display: block; }
+
+.heroLineAccent { color: var(--page-accent); }
 
 .intro {
   max-width: 27ch;
@@ -177,6 +180,9 @@
 
 .links a:last-child { color: var(--page-muted); }
 .links a:hover { color: var(--page-ink); text-decoration: none; }
+.links a span { display: inline-block; transition: transform .22s cubic-bezier(.25, 1, .5, 1); }
+.links a:hover span,
+.links a:focus-visible span { transform: translate(2px, -2px); }
 
 .preview:focus-visible,
 .project h3 a:focus-visible,
@@ -202,5 +208,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preview img { transition: none; }
+  .preview img,
+  .links a span { transition: none; }
 }
