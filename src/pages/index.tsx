@@ -5,10 +5,10 @@ import { useProjectsMotion } from "../components/ProjectsMotion/useProjectsMotio
 import styles from "./index.module.css";
 
 const projects = [
-  { title: "GROOVE", lines: ["GROOVE"], category: "SOUND / OBJECT", image: "/project-previews/vinyl.webp", alt: "3D 턴테이블 위의 검은 LP 레코드", demo: "/vinyl/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/vinyl" },
-  { title: "LOTTE WORLD TOWER", lines: ["LOTTE WORLD", "TOWER"], category: "ARCHITECTURE / SEOUL", image: "/project-previews/tower.webp", alt: "서울 롯데월드타워의 3D 모델", demo: "/lotte-tower/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/lotte-tower" },
-  { title: "PORSCHE TAYCAN", lines: ["PORSCHE", "TAYCAN"], category: "AUTOMOTIVE / 3D", image: "/project-previews/taycan.jpg", alt: "흰색 포르쉐 타이칸 3D 모델", demo: "/taycan/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/taycan" },
-  { title: "SCREW WORKS", lines: ["SCREW", "WORKS"], category: "FACTORY / SIMULATION", image: "/project-previews/factory.jpg", alt: "푸른색 스마트 팩토리 3D 생산 라인", demo: "/smart-factory/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/smart-factory" },
+  { title: "GROOVE", lines: ["GROOVE"], category: "SOUND / OBJECT", image: "/project-previews/vinyl-night.webp", alt: "어두운 무대에 놓인 LP 턴테이블", demo: "/vinyl/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/vinyl" },
+  { title: "LOTTE WORLD TOWER", lines: ["LOTTE WORLD", "TOWER"], category: "ARCHITECTURE / SEOUL", image: "/project-previews/tower-night.webp", alt: "밤의 서울을 배경으로 빛나는 롯데월드타워", demo: "/lotte-tower/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/lotte-tower" },
+  { title: "PORSCHE TAYCAN", lines: ["PORSCHE", "TAYCAN"], category: "AUTOMOTIVE / 3D", image: "/project-previews/taycan-night.webp", alt: "푸른빛 전시대 위의 흰색 포르쉐 타이칸", demo: "/taycan/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/taycan" },
+  { title: "SCREW WORKS", lines: ["SCREW", "WORKS"], category: "FACTORY / SIMULATION", image: "/project-previews/factory-night.webp", alt: "푸른빛 스마트 공장의 생산 라인", demo: "/smart-factory/", source: "https://github.com/C17AN/c17an.github.io/tree/master/static/smart-factory" },
 ] as const;
 
 const number = (index: number) => String(index + 1).padStart(2, "0");

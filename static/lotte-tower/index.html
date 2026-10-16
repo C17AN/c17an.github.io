@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#e9e6df" />
+  <meta name="theme-color" content="#070d14" />
   <meta name="description" content="Three.js로 구현한 롯데월드타워 3D 인터랙티브 렌더링" />
   <title>LOTTE WORLD TOWER — Three.js Study</title>
   <link rel="stylesheet" href="/fonts/pretendard.css" />
@@ -17,6 +17,13 @@
     @media(max-width:850px){.page{padding:0 6vw}.topbar{height:70px}.topmeta{gap:12px;font-size:8px}main{grid-template-columns:1fr;gap:0;padding:28px 0 30px}.stage{order:0;height:min(90vw,540px);min-height:330px;margin:-5px -5vw 0}.copy{order:1;padding:0 0 32px}.stage:before{width:70vw}.annotation{right:3%;top:12%}.model-caption{left:9%;bottom:3%}.controls{right:5%;bottom:2%}h1{font-size:clamp(49px,11vw,74px)}.intro{max-width:490px}.facts{max-width:480px}}
     @media(max-width:480px){.topmeta span:first-child{display:none}.stage{min-height:300px}.annotation{font-size:7px}.controls button{padding:8px 9px;font-size:8px}.footer{font-size:7px}.footer span:last-child{max-width:150px;text-align:right;line-height:1.8}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+    :root{--paper:#070d14;--ink:#f0f6f6;--muted:#91aebd;--line:#284454;--accent:#ff7849;--sky:#89d8f3}
+    body{background:radial-gradient(ellipse 48% 68% at 70% 43%,#143549 0,transparent 78%),var(--paper)}
+    .eyebrow,.model-caption b,.footer .live{color:var(--sky)}.topmeta span:last-child{color:var(--accent)}.eyebrow:before,.annotation:before{background:var(--sky)}
+    h1 span{color:var(--sky)}.intro{color:#b5c8cf}.fact b{color:var(--ink)}.fact:first-child b{color:var(--accent)}
+    .stage:before{background:radial-gradient(circle,#1d5366 0,#102c3d 47%,transparent 74%);filter:blur(11px)}.model-caption,.annotation{color:#a9c5d0}
+    .controls button{background:#0b202bcf;border-color:#557b8b;color:#d9f2f5}.controls button:hover{background:var(--accent);border-color:var(--accent);color:#091117}
+    .footer{color:var(--muted)}button:focus-visible,a:focus-visible{outline:2px solid var(--sky);outline-offset:4px}
   </style>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
@@ -27,7 +34,7 @@
       <section class="copy">
         <p class="eyebrow">ARCHITECTURE · 01 / SEOUL</p>
         <h1>LOTTE<br/><span>WORLD TOWER</span></h1>
-        <p class="intro">도시 위로 길게 뻗어 오르는 서울의 랜드마크. 점점 가늘어지는 유리 외벽과 첨탑의 실루엣을 Three.js로 표현했습니다. 드래그해 여러 각도에서 살펴보세요.</p>
+        <p class="intro">서울의 밤 위로 솟은 555미터의 실루엣. 빛을 머금은 유리 외벽과 첨탑을 드래그해 여러 각도에서 살펴보세요.</p>
         <div class="facts"><div class="fact"><b>555 m</b><span>ARCHITECTURAL HEIGHT</span></div><div class="fact"><b>123</b><span>FLOORS ABOVE GROUND</span></div></div>
       </section>
       <section class="stage" aria-label="Three.js로 렌더링한 롯데월드타워 3D 모델">
@@ -52,7 +59,7 @@
 
     const scene=new THREE.Scene();
     const camera=new THREE.PerspectiveCamera(32,1,.1,80);
-    camera.position.set(8.6,7.4,10.8);
+    camera.position.set(10.03,8.13,12.59);
     const controls=new OrbitControls(camera,canvas);
     controls.enableDamping=true;
     controls.dampingFactor=.06;
@@ -61,16 +68,16 @@
     controls.maxDistance=18;
     controls.minPolarAngle=.3;
     controls.maxPolarAngle=1.4;
-    controls.target.set(0,3.65,0);
+    controls.target.set(0,3.75,0);
     controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     controls.autoRotateSpeed=.65;
 
-    scene.add(new THREE.HemisphereLight(0xfaf5e9,0x59646c,2.25));
-    const sun=new THREE.DirectionalLight(0xffecd3,3.5);
+    scene.add(new THREE.HemisphereLight(0xaee5f5,0x14293b,2.0));
+    const sun=new THREE.DirectionalLight(0xa1dcf6,4.2);
     sun.position.set(-5,10,7);scene.add(sun);
-    const rim=new THREE.DirectionalLight(0xc1dce7,2.7);
+    const rim=new THREE.DirectionalLight(0x5bbce6,3.3);
     rim.position.set(5,6,-5);scene.add(rim);
-    const fill=new THREE.DirectionalLight(0xf4cbb1,1.1);
+    const fill=new THREE.DirectionalLight(0xff9767,1.6);
     fill.position.set(3,3,7);scene.add(fill);
 
     const tower=new THREE.Group();
@@ -82,7 +89,7 @@
     };
     const sideCount=96, heightSteps=120;
     const positions=[],colors=[],indices=[];
-    const low=new THREE.Color('#dfd6c7'),high=new THREE.Color('#9eb4bd');
+    const low=new THREE.Color('#4c819e'),high=new THREE.Color('#9bd3e7');
     for(let iy=0;iy<=heightSteps;iy++){
       const t=iy/heightSteps,y=t*height,r=radiusAt(t);
       const glass=low.clone().lerp(high,t*.86);
@@ -129,8 +136,12 @@
       const lines=new THREE.LineSegments(geometry,material);
       tower.add(lines);return lines;
     }
-    lineMesh(seamPoints,0x66818a,.44);
-    lineMesh(floorPoints,0x607980,.24);
+    lineMesh(seamPoints,0xb5e8f6,.48);
+    lineMesh(floorPoints,0x6eafd0,.30);
+    // A second, finer rhythm of illuminated mullions gives the glass facade depth.
+    const litSeams=[];
+    for(let s=0;s<sideCount;s+=4){const a=(s+.55)/sideCount*Math.PI*2;for(let i=0;i<heightSteps;i++){const t0=i/heightSteps,t1=(i+1)/heightSteps;if((i+s)%11<2)continue;const r0=radiusAt(t0)+.008,r1=radiusAt(t1)+.008;litSeams.push(Math.sin(a)*r0,t0*height,Math.cos(a)*r0*.72,Math.sin(a)*r1,t1*height,Math.cos(a)*r1*.72)}}
+    lineMesh(litSeams,0x8fe4ff,.34);
 
     // Observation deck belt and slender antenna.
     function ellipseBand(y,r,tube,color){
@@ -140,31 +151,35 @@
       const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,160,tube,6,true),new THREE.MeshStandardMaterial({color,metalness:.48,roughness:.27}));
       tower.add(mesh);return mesh;
     }
-    ellipseBand(5.88,radiusAt(5.88/height)+.012,.014,0xd7d0c3);
+    ellipseBand(5.88,radiusAt(5.88/height)+.012,.014,0xff8959);
+    ellipseBand(6.02,radiusAt(6.02/height)+.012,.009,0x9de8ff);
+    ellipseBand(.7,radiusAt(.7/height)+.013,.012,0xff8959);
+    for(let i=0;i<6;i++){const y=height+.06+i*.14,r=.077-i*.009;const collar=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.025,24),new THREE.MeshStandardMaterial({color:i%2?0x9bd8e8:0xff8659,metalness:.65,roughness:.24}));collar.position.y=y;tower.add(collar)}
     const antenna=new THREE.Mesh(new THREE.CylinderGeometry(.025,.075,.96,20),new THREE.MeshStandardMaterial({color:0x8e9ea0,metalness:.56,roughness:.25}));
     antenna.position.y=height+.46;antenna.castShadow=true;tower.add(antenna);
     const spireTip=new THREE.Mesh(new THREE.ConeGeometry(.025,.22,20),new THREE.MeshStandardMaterial({color:0xc8bda9,metalness:.52,roughness:.27}));
     spireTip.position.y=height+1.05;tower.add(spireTip);
 
     // Low podium, landscaped plaza and a quiet Seoul skyline.
-    const stone=new THREE.MeshStandardMaterial({color:0xbcb7aa,roughness:.78});
-    const darkStone=new THREE.MeshStandardMaterial({color:0x8b918c,roughness:.7});
+    const stone=new THREE.MeshStandardMaterial({color:0x254356,roughness:.78});
+    const darkStone=new THREE.MeshStandardMaterial({color:0x385d70,roughness:.7});
     const podium=new THREE.Mesh(new THREE.CylinderGeometry(.72,.78,.2,96),stone);
     podium.position.y=-.12;podium.receiveShadow=true;tower.add(podium);
     const podiumTop=new THREE.Mesh(new THREE.CylinderGeometry(.62,.7,.08,96),darkStone);
     podiumTop.position.y=.02;tower.add(podiumTop);
-    const plaza=new THREE.Mesh(new THREE.CylinderGeometry(2.85,2.95,.12,96),new THREE.MeshStandardMaterial({color:0xd1cdc2,roughness:.9}));
+    const plaza=new THREE.Mesh(new THREE.CylinderGeometry(2.85,2.95,.12,96),new THREE.MeshStandardMaterial({color:0x142a39,roughness:.82,metalness:.18}));
     plaza.position.y=-.27;plaza.receiveShadow=true;scene.add(plaza);
-    const plazaRing=new THREE.Mesh(new THREE.TorusGeometry(2.65,.018,8,128),new THREE.MeshStandardMaterial({color:0x9da39d,metalness:.25,roughness:.6}));
+    const plazaRing=new THREE.Mesh(new THREE.TorusGeometry(2.65,.018,8,128),new THREE.MeshStandardMaterial({color:0x64cdea,emissive:0x1d738f,emissiveIntensity:.7,metalness:.25,roughness:.4}));
     plazaRing.rotation.x=Math.PI/2;plazaRing.position.y=-.2;scene.add(plazaRing);
     const skyline=new THREE.Group();scene.add(skyline);
-    const cityMaterials=[0xc5c9c5,0xb8bfbe,0xd1ccc2].map(color=>new THREE.MeshStandardMaterial({color,roughness:.82}));
+    const cityMaterials=[0x2d4b5c,0x345970,0x1d3d51].map(color=>new THREE.MeshStandardMaterial({color,roughness:.7,metalness:.2}));
     for(let i=0;i<18;i++){
       const a=i/18*Math.PI*2+Math.PI/18;
       const w=.28+(i%3)*.09,d=.28+(i%2)*.11,h=.32+(i%5)*.17;
       const building=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),cityMaterials[i%cityMaterials.length]);
       building.position.set(Math.sin(a)*(1.95+(i%3)*.25),-.21+h/2,Math.cos(a)*(1.95+(i%3)*.25));
       building.rotation.y=a;building.castShadow=true;skyline.add(building);
+      for(let level=.12;level<h-.06;level+=.16){if((Math.round(level*100)+i)%3===0)continue;const window=new THREE.Mesh(new THREE.BoxGeometry(w*.56,.035,.012),new THREE.MeshBasicMaterial({color:(i+Math.round(level*10))%5===0?0xff9c6c:0x91dfff}));window.position.set(building.position.x,building.position.y-h/2+level,building.position.z+d/2+.008);skyline.add(window)}
     }
     // A softly lit base plane keeps the tower grounded without hiding its silhouette.
     const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.12}));
@@ -179,7 +194,7 @@
     };
     new ResizeObserver(resize).observe(canvas);resize();
     document.querySelector('#reset').addEventListener('click',()=>{
-      camera.position.set(8.6,7.4,10.8);controls.target.set(0,3.65,0);controls.update();
+      camera.position.set(10.03,8.13,12.59);controls.target.set(0,3.75,0);controls.update();
     });
     const motionButton=document.querySelector('#motion');
     motionButton.addEventListener('click',()=>{

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#eeece5" />
+  <meta name="theme-color" content="#080d12" />
   <meta name="description" content="A little room for the warmth of vinyl. An interactive Three.js record player." />
   <title>GROOVE — Vinyl, in motion</title>
   <link rel="stylesheet" href="/fonts/pretendard.css" />
@@ -17,6 +17,14 @@
     @media(max-width:850px){.page{padding:0 6vw}.topbar{height:70px}.nav-meta{gap:15px;font-size:8px}main{grid-template-columns:1fr;gap:0;padding:52px 0 25px}.copy{order:1}.stage{order:0;height:min(90vw,520px);min-height:320px;margin:-10px -5vw 0}.stage:before{width:70vw}.side-note{right:0}.badge{left:7%}.caption{left:10%;bottom:3%}h1{font-size:clamp(56px,12vw,86px)}.intro{max-width:450px}.track{max-width:450px}}
     @media(max-width:480px){.nav-meta span:first-child{display:none}.stage{min-height:290px}.badge{width:58px;height:58px;font-size:7px}.side-note{font-size:8px}.footer{font-size:7px}.footer span:last-child{max-width:130px;text-align:right;line-height:1.8}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+    :root{--paper:#080d12;--ink:#eef6f7;--muted:#94a8b0;--line:#27414d;--orange:#ff7746;--sky:#84d9f4}
+    body{background:radial-gradient(ellipse 50% 65% at 82% 42%,#163342 0,transparent 75%),var(--paper)}
+    .topbar,.footer{border-color:var(--line)}.nav-meta span:last-child,.eyebrow,.caption b,.footer .live{color:var(--sky)}
+    .eyebrow:before{background:var(--sky)}h1 em{color:var(--orange)}.intro{color:#b4c4c9}.track{border-color:var(--line)}.track-dot{box-shadow:0 0 0 5px #ff774626,0 0 17px var(--orange)}
+    .play{background:var(--orange);color:#10151a}.play:hover{background:var(--sky)}.volume input{accent-color:var(--sky)}
+    .stage:before{width:min(48vw,590px);background:radial-gradient(circle,#2d5560 0,#17303d 48%,transparent 74%);filter:blur(12px)}.stage:after{content:"";position:absolute;inset:13% 8%;border:1px solid #83d7f427;pointer-events:none}
+    .side-note,.caption,.badge,.footer{color:var(--muted)}.side-note:after{background:var(--sky)}.badge{border-color:var(--sky);color:var(--sky)}.badge strong{color:var(--orange)}
+    button:focus-visible,input:focus-visible{outline:2px solid var(--sky);outline-offset:4px}
   </style>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
@@ -43,15 +51,20 @@
     renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18;
     const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(32,1,.1,100); camera.position.set(5.8,7.2,9.4);
     const controls=new OrbitControls(camera,canvas); controls.enableDamping=true; controls.dampingFactor=.06; controls.enablePan=false; controls.minDistance=10; controls.maxDistance=18; controls.minPolarAngle=.52; controls.maxPolarAngle=1.34; controls.target.set(0,.48,0);
-    scene.add(new THREE.HemisphereLight(0xfaf5e9,0x625b4e,2.3));
-    const key=new THREE.DirectionalLight(0xffe5c4,3.8);key.position.set(-3,8,5);scene.add(key);
-    const fill=new THREE.DirectionalLight(0xd7e1ec,2.1);fill.position.set(5,5,-4);scene.add(fill);
+    scene.add(new THREE.HemisphereLight(0xb8e9f6,0x263843,2.0));
+    const key=new THREE.DirectionalLight(0xffd0a2,4.2);key.position.set(-3,8,5);scene.add(key);
+    const fill=new THREE.DirectionalLight(0x78cfea,3.0);fill.position.set(5,5,-4);scene.add(fill);
     const mat=(color,roughness=.55,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
-    const baseMat=mat('#433c35',.31,.16), edgeMat=mat('#2b2927',.26,.34), rubber=mat('#181817',.86), metal=mat('#bab7ae',.22,.82), darkMetal=mat('#55534e',.29,.72), black=mat('#101112',.34,.24), labelMat=mat('#e35a32',.42,.05);
+    const baseMat=mat('#23313a',.31,.34), edgeMat=mat('#101b22',.26,.54), rubber=mat('#11191e',.86), metal=mat('#b9d6dc',.2,.82), darkMetal=mat('#415c69',.29,.72), black=mat('#080b0f',.3,.22), labelMat=mat('#f06d3d',.42,.05);
     const turntable=new THREE.Group();scene.add(turntable);
     function box(parent,w,h,d,material,x,y,z,r=0){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.rotation.y=r;m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
     box(turntable,7.5,.48,5.15,baseMat,0,0,0);
     box(turntable,7.55,.085,5.2,edgeMat,0,-.24,0);
+    // Machined trim, fasteners, and strobe marks make the hardware legible up close.
+    const skyMetal=mat('#80d6ef',.27,.66);
+    for(const z of [-2.48,2.48])box(turntable,7.24,.018,.025,skyMetal,0,.245,z);
+    for(const x of [-3.54,3.54])box(turntable,.025,.018,4.55,skyMetal,x,.245,0);
+    for(const x of [-3.43,3.43])for(const z of [-2.25,2.25]){const screw=new THREE.Mesh(new THREE.CylinderGeometry(.048,.048,.012,20),metal);screw.position.set(x,.25,z);turntable.add(screw);box(turntable,.055,.003,.007,edgeMat,x,.258,z,.7)}
     // soft underside shadow and four compact feet
     const footMat=mat('#242321',.56,.12);for(const x of [-3,3])for(const z of [-1.9,1.9]){const f=new THREE.Mesh(new THREE.CylinderGeometry(.3,.34,.24,32),footMat);f.position.set(x,-.42,z);f.castShadow=true;turntable.add(f)}
     // platter, rubber mat, and chrome lip
@@ -59,6 +72,7 @@
     const discMesh=(radius,height,material,y,parent=platter)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,height,128),material);m.position.y=y;m.castShadow=true;m.receiveShadow=true;parent.add(m);return m};
     discMesh(2.27,.09,darkMetal,0); discMesh(2.23,.035,rubber,.06);
     const lip=new THREE.Mesh(new THREE.TorusGeometry(2.25,.028,10,128),metal);lip.rotation.x=Math.PI/2;lip.position.y=.045;platter.add(lip);
+    for(let i=0;i<120;i++){const a=i/120*Math.PI*2;const mark=box(platter,.025,.004,.075,i%5===0?skyMetal:metal,Math.sin(a)*2.18,.105,Math.cos(a)*2.18,a);mark.castShadow=false}
     const vinyl=new THREE.Group();vinyl.position.y=.09;platter.add(vinyl);
     discMesh(2.08,.075,black,0,vinyl);
     // A fine, physically modeled runout and groove field. The layered dark rings catch the studio light as the record turns.
@@ -73,6 +87,7 @@
     const spindle=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.12,32),metal);spindle.position.set(0,.15,0);platter.add(spindle);const pin=new THREE.Mesh(new THREE.SphereGeometry(.05,20,12),mat('#d2cfc6',.16,.85));pin.position.y=.218;platter.add(pin);
     // Speed selector
     const speed=new THREE.Mesh(new THREE.CylinderGeometry(.105,.105,.08,32),darkMetal);speed.position.set(3.12,.29,1.9);turntable.add(speed);const speedDot=new THREE.Mesh(new THREE.SphereGeometry(.038,16,10),labelMat);speedDot.position.set(3.12,.335,1.9);turntable.add(speedDot);
+    for(let i=0;i<3;i++){const led=new THREE.Mesh(new THREE.SphereGeometry(.035,12,8),new THREE.MeshBasicMaterial({color:i===0?0xff7746:0x80d8f3}));led.position.set(2.72+i*.22,.255,2.05);turntable.add(led)}
     // Tonearm assembly with pivot, counterweight, tube, headshell, and stylus.
     const arm=new THREE.Group();arm.position.set(2.55,.28,-1.48);arm.rotation.y=-.1;turntable.add(arm);
     const pivot=new THREE.Mesh(new THREE.CylinderGeometry(.38,.43,.16,48),darkMetal);pivot.position.y=.1;arm.add(pivot);
@@ -81,6 +96,8 @@
     function rod(parent,a,b,r,material){const va=new THREE.Vector3(...a),vb=new THREE.Vector3(...b),dir=vb.clone().sub(va);const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r*.76,r,dir.length(),20),material);mesh.position.copy(va).add(vb).multiplyScalar(.5);mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());mesh.castShadow=true;parent.add(mesh);return mesh}
     rod(arm,[0,.32,0],[-1.1,.36,.95],.07,metal);rod(arm,[-1.1,.36,.95],[-1.48,.32,1.22],.052,darkMetal);
     const head=box(arm,.38,.09,.28,edgeMat,-1.53,.28,1.26,-.3);rod(arm,[-1.62,.25,1.3],[-1.66,.12,1.33],.018,metal);
+    const armDial=new THREE.Mesh(new THREE.TorusGeometry(.32,.018,8,48),skyMetal);armDial.rotation.x=Math.PI/2;armDial.position.y=.26;arm.add(armDial);
+    for(let i=0;i<12;i++){const a=i/12*Math.PI*2;box(arm,.012,.006,.055,metal,Math.sin(a)*.32,.272,Math.cos(a)*.32,a)}
     // Feet and floating shadow plane
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.17}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);
     renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;
@@ -94,7 +111,7 @@
     function pause(){playing=false;clearInterval(timerId);if(master&&audioCtx){master.gain.setTargetAtTime(0,audioCtx.currentTime,.12)}document.querySelector('#play-icon').innerHTML='<path d="M8 5v14l11-7z"/>';document.querySelector('#play').setAttribute('aria-label','음악 재생');document.querySelector('#play').title='재생';document.querySelector('#hint').innerHTML='PRESS PLAY<br/>TO BEGIN LISTENING';document.querySelector('#status').innerHTML='● &nbsp; PAUSED'}
     document.querySelector('#play').addEventListener('click',()=>playing?pause():play());document.querySelector('#volume').addEventListener('input',e=>{if(master&&audioCtx)master.gain.setTargetAtTime(playing?Number(e.target.value)/100*.36:0,audioCtx.currentTime,.08)});
     function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(canvas);resize();
-    const clock=new THREE.Clock();function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05);if(playing)vinyl.rotation.y-=dt*Math.PI*2*(33.333/60);platter.rotation.y=vinyl.rotation.y;controls.update();renderer.render(scene,camera)}animate();
+    const clock=new THREE.Clock();function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05);if(playing)platter.rotation.y-=dt*Math.PI*2*(33.333/60);controls.update();renderer.render(scene,camera)}animate();
   </script>
 </body>
 </html>
