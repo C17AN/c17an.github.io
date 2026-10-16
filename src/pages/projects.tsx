@@ -110,7 +110,7 @@ export default function ProjectsPage(): JSX.Element {
     >
       <main className={styles.page}>
         <header className={styles.hero}>
-          <p className={styles.eyebrow}>SELECTED WORKS · 2022—2026</p>
+          <p className={styles.eyebrow}>SELECTED WORKS · 2020—2026</p>
           <h1>
             만들고 실험한 것들을
             <br />
