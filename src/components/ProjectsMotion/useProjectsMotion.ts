@@ -65,34 +65,33 @@ export function useProjectsMotion() {
           const body = project.querySelector("[data-motion-body]");
           if (!preview || !body) return;
 
-          gsap.timeline({
-            scrollTrigger: { trigger: project, start: "top 82%", once: true },
-          })
-            .fromTo(
-              preview,
-              { autoAlpha: 0, y: 28, scale: 0.97 },
-              {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.85,
-                ease: "power3.out",
-                clearProps: "opacity,visibility,transform",
-              },
-            )
-            .fromTo(
-              body.children,
-              { autoAlpha: 0, y: 20 },
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.65,
-                stagger: 0.08,
-                ease: "power3.out",
-                clearProps: "opacity,visibility,transform",
-              },
-              0.12,
-            );
+          gsap.fromTo(
+            preview,
+            { autoAlpha: 0, y: 28, scale: 0.97 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.85,
+              ease: "power3.out",
+              clearProps: "opacity,visibility,transform",
+              scrollTrigger: { trigger: preview, start: "top 85%", once: true },
+            },
+          );
+
+          gsap.fromTo(
+            body.children,
+            { autoAlpha: 0, y: 20 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.65,
+              stagger: 0.08,
+              ease: "power3.out",
+              clearProps: "opacity,visibility,transform",
+              scrollTrigger: { trigger: body, start: "top 85%", once: true },
+            },
+          );
         });
       }, page);
 
