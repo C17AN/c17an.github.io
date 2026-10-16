@@ -6,13 +6,13 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Today Chanmin Learned",
-  tagline: "Dinosaurs are cool",
+  title: "C17AN",
+  tagline: "Interactive works",
   url: "https://c17an.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "favicon.svg",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -33,20 +33,8 @@ const config = {
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
+        docs: false,
+        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -57,32 +45,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      navbar: {
-        logo: {
-          alt: "My Site Logo",
-          src: "img/logo.svg",
-        },
-        items: [
-          {
-            type: "doc",
-            docId: "intro",
-            position: "left",
-            label: "문서",
-          },
-          { to: "/projects", label: "프로젝트", position: "left" },
-          { to: "/blog", label: "블로그", position: "left" },
-          { to: "/visitor", label: "명함 주고받기", position: "left" },
-          {
-            href: "https://github.com/c17an",
-            label: "GitHub",
-            position: "right",
-          },
-        ],
-      },
-      footer: {
-        style: "dark",
-        copyright: `Copyright © ${new Date().getFullYear()} 김찬민, Built with Docusaurus.`,
-      },
+      navbar: { items: [] },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
