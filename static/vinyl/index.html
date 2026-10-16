@@ -6,11 +6,9 @@
   <meta name="theme-color" content="#eeece5" />
   <meta name="description" content="A little room for the warmth of vinyl. An interactive Three.js record player." />
   <title>GROOVE — Vinyl, in motion</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/fonts/pretendard.css" />
   <style>
-    :root{--paper:#eeece5;--ink:#24231f;--muted:#77766f;--line:#d4d1c8;--orange:#e45229;--mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--serif:'Playfair Display',Georgia,serif}
+    :root{--paper:#eeece5;--ink:#24231f;--muted:#77766f;--line:#d4d1c8;--orange:#e45229;--mono:'Pretendard',sans-serif;--sans:'Pretendard',sans-serif;--serif:'Pretendard',sans-serif}
     *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
     body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;z-index:5;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E")}
     .page{max-width:1440px;margin:auto;padding:0 6.1vw;position:relative;z-index:1}.topbar{height:86px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:.17em}.brand-mark{width:24px;height:24px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center}.brand-mark:after{content:"";width:5px;height:5px;background:var(--orange);border-radius:50%}.nav-meta,.eyebrow,.caption,.disc-label,.side-note{font-family:var(--mono);text-transform:uppercase;letter-spacing:.13em;font-size:10px}.nav-meta{color:var(--muted);display:flex;gap:34px}.nav-meta span:last-child{color:var(--orange)}
@@ -67,8 +65,10 @@
     for(let i=0;i<48;i++){const r=1.00+i*.022;const groove=new THREE.Mesh(new THREE.TorusGeometry(r,.003+(i%4===0?.001:0),5,160),mat(i%3===0?'#292a2b':'#202122',.39,.16));groove.rotation.x=Math.PI/2;groove.position.y=.041;vinyl.add(groove)}
     const label=new THREE.Mesh(new THREE.CylinderGeometry(.66,.66,.014,96),labelMat);label.position.y=.045;vinyl.add(label);
     // Fine type on the center label is generated locally, so no image assets are needed.
-    const labelCanvas=document.createElement('canvas');labelCanvas.width=512;labelCanvas.height=512;const ctx=labelCanvas.getContext('2d');ctx.clearRect(0,0,512,512);ctx.fillStyle='#f4d6a6';ctx.font='600 42px Georgia';ctx.textAlign='center';ctx.fillText('GROOVE',256,228);ctx.font='22px monospace';ctx.fillText('SIDE A  ·  33⅓ RPM',256,276);ctx.beginPath();ctx.arc(256,256,18,0,Math.PI*2);ctx.fillStyle='#272521';ctx.fill();
+    const labelCanvas=document.createElement('canvas');labelCanvas.width=512;labelCanvas.height=512;const ctx=labelCanvas.getContext('2d');
+    const drawLabel=()=>{ctx.clearRect(0,0,512,512);ctx.fillStyle='#f4d6a6';ctx.font='600 42px Pretendard';ctx.textAlign='center';ctx.fillText('GROOVE',256,228);ctx.font='22px Pretendard';ctx.fillText('SIDE A  ·  33⅓ RPM',256,276);ctx.beginPath();ctx.arc(256,256,18,0,Math.PI*2);ctx.fillStyle='#272521';ctx.fill()};drawLabel();
     const tex=new THREE.CanvasTexture(labelCanvas);tex.colorSpace=THREE.SRGBColorSpace;const labelTop=new THREE.Mesh(new THREE.CircleGeometry(.635,96),new THREE.MeshStandardMaterial({map:tex,roughness:.62}));labelTop.rotation.x=-Math.PI/2;labelTop.position.y=.053;vinyl.add(labelTop);
+    document.fonts.ready.then(()=>{drawLabel();tex.needsUpdate=true});
     // Spindle and center pin
     const spindle=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.12,32),metal);spindle.position.set(0,.15,0);platter.add(spindle);const pin=new THREE.Mesh(new THREE.SphereGeometry(.05,20,12),mat('#d2cfc6',.16,.85));pin.position.y=.218;platter.add(pin);
     // Speed selector

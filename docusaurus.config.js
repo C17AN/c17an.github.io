@@ -13,6 +13,7 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "favicon.svg",
+  stylesheets: ["/fonts/pretendard.css"],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
