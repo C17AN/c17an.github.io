@@ -34,7 +34,12 @@
 }
 .wordmark { justify-self: start; font-size: 24px; font-weight: 900; letter-spacing: -.075em; }
 .wordmark span { margin-left: 3px; color: var(--signal); font-size: 11px; vertical-align: top; letter-spacing: 0; }
-.topbarCenter { justify-self: center; color: var(--sky); }
+.topbarCenter { justify-self: center; align-self: stretch; display: flex; align-items: center; gap: 40px; }
+.topbarCenter a { position: relative; display: flex; align-items: center; height: 100%; }
+.topbarCenter a[aria-current="page"] { color: var(--paper); }
+.topbarCenter a[aria-current="page"]::after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 3px; background: var(--signal); }
+.topbarCenter a:not([aria-current="page"]) { color: var(--sky); }
+.topbarCenter a:hover { color: var(--signal); }
 .github { justify-self: end; display: inline-flex; gap: 18px; align-items: center; }
 .github span { font-size: 18px; transition: transform .25s ease; }
 .github:hover span { transform: translate(3px, -3px); }
@@ -118,8 +123,10 @@
   .archivePreview { width: 155px; }
 }
 @media (max-width: 760px) {
-  .topbar { grid-template-columns: 1fr 1fr; min-height: 68px; }
-  .topbarCenter { display: none; }
+  .topbar { grid-template-columns: auto 1fr auto; min-height: 68px; gap: 14px; }
+  .topbarCenter { gap: 18px; font-size: 10px; }
+  .github { font-size: 10px; }
+  .github span { display: none; }
   .stage { min-height: 680px; padding-bottom: 32px; }
   .artwork { top: 12%; right: 0; width: 88%; height: 54%; }
   .stage::before { top: 17%; right: 0; width: 28%; height: 51%; }
@@ -142,7 +149,8 @@
 }
 @media (max-width: 500px) {
   .wordmark { font-size: 21px; }
-  .github { gap: 8px; }
+  .topbarCenter { gap: 12px; font-size: 9px; }
+  .github { gap: 8px; font-size: 9px; }
   .stage { min-height: 650px; }
   .artwork { top: 13%; width: 92%; height: 49%; }
   .stageInfo { top: 49%; }

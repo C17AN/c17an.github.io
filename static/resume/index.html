@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#090e14" />
+  <meta name="description" content="김찬민의 프론트엔드 경력, 성과, 기술, AI 제품 개발 경험을 탐색하는 인터랙티브 이력서" />
+  <title>RESUME — 김찬민 / C17AN</title>
+  <link rel="stylesheet" href="/fonts/pretendard.css" />
+  <link rel="stylesheet" href="/resume/resume.css" />
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="C17AN 홈">C17AN<span>®</span></a>
+    <nav class="site-nav" aria-label="사이트 메뉴"><a href="/">WORK</a><a href="/resume/" aria-current="page">RESUME</a></nav>
+    <a class="github" href="https://github.com/C17AN" target="_blank" rel="noopener noreferrer">GITHUB <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">RESUME / FRONTEND ENGINEER</p>
+        <h1 id="page-title">CHANMIN <em>KIM.</em></h1>
+      </div>
+      <p class="statement">서비스의 속도와 사용성,<br />만드는 방식까지 다듬는<br />프론트엔드 개발자 김찬민입니다.</p>
+    </section>
+
+    <section class="explore" aria-label="이력서 탐색">
+      <div class="explore-heading"><span>FOUR DIMENSIONS OF WORK</span><span>SELECT A CHAPTER · DRAG THE OBJECT</span></div>
+      <nav class="chapter-nav" aria-label="이력서 핵심 영역">
+        <button type="button" data-chapter="0" aria-pressed="true"><span>01</span><strong>경력</strong><small>EXPERIENCE</small></button>
+        <button type="button" data-chapter="1" aria-pressed="false"><span>02</span><strong>성과</strong><small>IMPACT</small></button>
+        <button type="button" data-chapter="2" aria-pressed="false"><span>03</span><strong>기술</strong><small>TOOLKIT</small></button>
+        <button type="button" data-chapter="3" aria-pressed="false"><span>04</span><strong>AI</strong><small>AI PRACTICE</small></button>
+      </nav>
+
+      <div class="chapter" id="chapter" data-mode="experience">
+        <div class="chapter-copy" aria-live="polite">
+          <p class="chapter-kicker" id="chapter-kicker">01 / EXPERIENCE</p>
+          <h2 id="chapter-title">제품을 만들고,<br />경험을 다듬다.</h2>
+          <p class="chapter-summary" id="chapter-summary">브랜드 웹부터 소비자 서비스, AI 제품까지. 규모와 맥락이 다른 화면을 한결같이 사용자의 관점에서 설계했습니다.</p>
+          <div class="chapter-items" id="chapter-items" aria-label="경력 세부 내용">
+            <button type="button" class="item" aria-pressed="true"><span class="item-index">01</span><span><strong>Toss</strong><small>2022.07 — 2023.04</small><span class="item-detail">캠페인·채용·브랜드 웹사이트 개발과 운영</span></span></button>
+            <button type="button" class="item" aria-pressed="false"><span class="item-index">02</span><span><strong>SK Planet · Product</strong><small>2023.08 — 현재</small><span class="item-detail">UPTN Station과 OK캐쉬백 오키클럽의 웹 경험 개발</span></span></button>
+            <button type="button" class="item" aria-pressed="false"><span class="item-index">03</span><span><strong>SK Planet · 10x TF</strong><small>2026.01 — 현재</small><span class="item-detail">AI 에이전트 관리 포털과 협업 도구 구현</span></span></button>
+          </div>
+        </div>
+        <div class="stage" id="stage">
+          <canvas id="scene" aria-label="선택한 이력서 영역을 표현한 3D 모델. 마우스로 드래그해 회전할 수 있습니다."></canvas>
+          <div class="stage-top"><span id="stage-index">01 / CAREER FORM</span><span>CHANMIN KIM · C17AN</span></div>
+          <div class="stage-bottom"><span id="stage-caption">TOSS → PRODUCT → AI</span><span>DRAG TO ROTATE</span></div>
+          <p class="scene-fallback" id="scene-fallback" hidden>3D 장면을 표시할 수 없지만, 왼쪽 이력서 내용은 계속 탐색할 수 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="foundations" aria-labelledby="foundation-title">
+      <h2 id="foundation-title">BEYOND<br /><span>THE SCREEN.</span></h2>
+      <div class="foundation-list">
+        <div><span>EDUCATION</span><strong>한국항공대학교 소프트웨어학과</strong></div>
+        <div><span>CERTIFICATION</span><strong>AWS Solutions Architect · Associate</strong></div>
+        <div><span>WRITING</span><strong>SK그룹 기술 블로그 Devocean 기고</strong></div>
+        <div><span>OPEN SOURCE</span><strong>MDN 문서·플랫폼 및 PrimeVue 기여</strong></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><a href="/">← SELECTED WORKS</a><span>C17AN® / RESUME</span><a href="https://github.com/C17AN" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>
+  <script type="module" src="/resume/resume.js"></script>
+</body>
+</html>
