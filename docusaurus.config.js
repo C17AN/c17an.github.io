@@ -69,6 +69,7 @@ const config = {
             position: "left",
             label: "문서",
           },
+          { to: "/projects", label: "프로젝트", position: "left" },
           { to: "/blog", label: "블로그", position: "left" },
           { to: "/visitor", label: "명함 주고받기", position: "left" },
           {
