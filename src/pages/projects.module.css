@@ -220,7 +220,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.15rem;
 }
 
@@ -238,6 +238,7 @@
 .card:nth-child(2) { --card-accent: #a7bbff; }
 .card:nth-child(3) { --card-accent: #e4a9d4; }
 .card:nth-child(1) { --card-accent: #80e6ef; }
+.card:nth-child(4) { --card-accent: #ffb177; }
 
 .card:hover,
 .card:focus-within {

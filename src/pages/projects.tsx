@@ -55,6 +55,19 @@ const projects: Project[] = [
     preview: "/project-previews/taycan.jpg",
     previewAlt: "포르쉐 타이칸 3D 모델의 미리보기",
   },
+  {
+    number: "04",
+    year: "2026",
+    title: "SCREW WORKS",
+    category: "SMART FACTORY / SIMULATION",
+    description:
+      "거대한 나사 공장의 5개 공정을 둘러보세요. 설비를 선택해 작업 애니메이션과 시뮬레이션 대시보드를 확인할 수 있습니다.",
+    tags: ["THREE.JS", "PROCEDURAL 3D", "DASHBOARD"],
+    repo: "https://github.com/C17AN/c17an.github.io/tree/master/static/smart-factory",
+    demo: "/smart-factory/",
+    preview: "/project-previews/factory.jpg",
+    previewAlt: "나사 스마트 공장의 3D 생산 라인 미리보기",
+  },
 ];
 
 export default function ProjectsPage(): JSX.Element {
@@ -121,7 +134,7 @@ export default function ProjectsPage(): JSX.Element {
                   <span className={styles.previewTint} aria-hidden="true" />
                   <span className={styles.previewTop} aria-hidden="true">
                     <span><i /> SCENE PREVIEW</span>
-                    <span>{project.number} / 03</span>
+                    <span>{project.number} / {String(projects.length).padStart(2, "0")}</span>
                   </span>
                   <span className={styles.previewAction} aria-hidden="true">
                     ENTER EXPERIENCE <span>↗</span>
