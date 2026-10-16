@@ -27,6 +27,17 @@ const projects: Project[] = [
     demo: "/vinyl/",
     featured: true,
   },
+  {
+    number: "02",
+    year: "2026",
+    title: "LOTTE WORLD TOWER",
+    category: "ARCHITECTURE · SEOUL",
+    description:
+      "서울의 랜드마크를 Three.js로 구성했습니다. 위로 갈수록 좁아지는 유리 외벽과 첨탑을 드래그해 둘러볼 수 있습니다.",
+    tags: ["Three.js", "Procedural 3D", "OrbitControls"],
+    repo: "https://github.com/C17AN/c17an.github.io/tree/master/static/lotte-tower",
+    demo: "/lotte-tower/",
+  },
 ];
 
 export default function ProjectsPage(): JSX.Element {
@@ -50,7 +61,7 @@ export default function ProjectsPage(): JSX.Element {
 
         <div className={styles.sectionHeading}>
           <span>THREE.JS ARCHIVE</span>
-          <span>{String(projects.length).padStart(2, "0")} THREE.JS PROJECT</span>
+          <span>{String(projects.length).padStart(2, "0")} THREE.JS PROJECT{projects.length === 1 ? "" : "S"}</span>
         </div>
 
         <section
