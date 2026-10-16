@@ -120,7 +120,7 @@ export default function ProjectsPage(): JSX.Element {
                   />
                   <span className={styles.previewTint} aria-hidden="true" />
                   <span className={styles.previewTop} aria-hidden="true">
-                    <span><i /> LIVE PREVIEW</span>
+                    <span><i /> SCENE PREVIEW</span>
                     <span>{project.number} / 03</span>
                   </span>
                   <span className={styles.previewAction} aria-hidden="true">

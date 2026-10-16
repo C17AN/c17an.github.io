@@ -393,8 +393,8 @@
   .heroVisual { display: none; }
   .hero h1 { font-size: clamp(3rem, 11vw, 5rem); }
   .intro { font-size: .9rem; }
-  .sectionHeading { font-size: .58rem; }
-  .sectionHeading > span { text-align: right; }
+  .sectionHeading { align-items: flex-start; flex-direction: column; gap: .45rem; font-size: .58rem; }
+  .sectionHeading > div { gap: .55rem; }
   .grid { grid-template-columns: 1fr; }
   .footer { flex-direction: column; margin-top: 3rem; }
 }
