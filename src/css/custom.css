@@ -56,3 +56,25 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Lenis adds these classes only while smooth scrolling is active. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+html.lenis [data-lenis-prevent],
+html.lenis [data-lenis-prevent-wheel],
+html.lenis [data-lenis-prevent-touch],
+html.lenis [data-lenis-prevent-vertical],
+html.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+html.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
