@@ -53,7 +53,7 @@ export default function Home(): JSX.Element {
     <main id="top" className={styles.page} ref={pageRef}>
       <header className={styles.topbar}>
         <a className={styles.wordmark} href="/" aria-label="C17AN 홈">C17AN<span>®</span></a>
-        <span className={styles.topbarCenter}>INTERACTIVE WORK / 2026</span>
+        <nav className={styles.topbarCenter} aria-label="사이트 메뉴"><a href="/" aria-current="page">WORK</a><a href="/resume/">RESUME</a></nav>
         <a className={styles.github} href="https://github.com/C17AN" target="_blank" rel="noopener noreferrer">GITHUB <span aria-hidden="true">↗</span></a>
       </header>
       <section className={styles.stage} ref={stageRef} aria-label="프로젝트 쇼케이스">
